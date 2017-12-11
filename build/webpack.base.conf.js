@@ -1,15 +1,18 @@
-var path = require('path')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
+var path = require('path');
+var utils = require('./utils');
+var config = require('../config');
+var vueLoaderConfig = require('./vue-loader.conf');
 
 function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+  return path.join(__dirname, '..', dir);
 }
 
 module.exports = {
   entry: {
     app: './src/main.js'
+  },
+  externals: {
+    'BMap': 'BMap'
   },
   output: {
     path: config.build.assetsRoot,
@@ -23,7 +26,8 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-      'utils':resolve('src/utils')
+      'utils': resolve('src/utils'),
+      'modules$': resolve('src/store/modules')
     }
   },
   module: {
@@ -73,4 +77,4 @@ module.exports = {
       }
     ]
   }
-}
+};

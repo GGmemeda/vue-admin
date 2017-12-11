@@ -1,0 +1,1 @@
+export const RECEIVE_POINTS = 'RECEIVE_POINTS';

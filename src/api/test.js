@@ -1,5 +1,11 @@
-import { API_USE } from '@/utils/const.js'
-
+import { $api } from './http';
+import { COMMON } from '@/utils/const.js';
+const base = COMMON.SERVER_NAME;
 export default {
-  first: API_USE('/123'),
-  second: API_USE('/sss')}
+  first: (data) => {
+    return $api.post(base + '/api/test/sss', data, {
+      'content-type': 'application/json'
+    });
+  }
+
+};
