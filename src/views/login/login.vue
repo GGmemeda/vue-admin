@@ -19,17 +19,17 @@
             <div class="control-group">
               <div class="controls">
                 <i class="fa fa-user login-icon"></i>
-                <input class="m-wrap placeholder-no-fix" type="text" set-focus ng-model="username"
+                <input class="m-wrap placeholder-no-fix" type="text" v-model="name"
                        placeholder="Username" name="username" id="username"
-                       ng-keypress="keyPress($event)">
+                >
               </div>
             </div>
             <div class="control-group">
               <div class="controls">
                 <i class="fa fa-lock login-icon"></i>
-                <input class="m-wrap placeholder-no-fix" type="password" ng-keypress="keyPress($event)"
+                <input class="m-wrap placeholder-no-fix" type="password"
                        placeholder="Password" name="password" id="password"
-                       autocomplete="off" ng-model="password">
+                       autocomplete="off" v-model="pwd">
               </div>
             </div>
             <div class="control-group error">
@@ -58,8 +58,13 @@
 
 </template>
 <script type='es6'>
+  import api from '@/api/index.js';
+  import MD5 from 'js-md5';
+  import { Base64 } from 'js-base64';
+  import { SALT } from 'utils/constant'
+
   export default {
-    name:'login',
+    name: 'login',
     data() {
       return {
         name: '',
@@ -74,8 +79,21 @@
     },
     methods: {
       handleLogin(){
-        localStorage.setItem('ucToken','12312knasdafmdwj1242');
-        this.$router.push({ path: '/',name:'mapMain' });
+        let reg = /^[0-9a-zA-Z]{0,20} * $/;
+        let status = reg.test(this.pwd);
+        if (!status) {
+          return;
+        }
+        let loginData = {
+          name: this.name,
+          pwd: MD5(SALT + this.pwd)
+        };
+
+        api.loginApi.login(loginData).then(res => {
+
+        });
+        localStorage.setItem('ucToken', '12312knasdafmdwj1242');
+        this.$router.push({path: '/', name: 'mapMain'});
       },
       isLogin: function () {
         // 这里在isLogin方法中先判断一下后台返回的是否为空值，如果不是然后提交后台返回的值。
@@ -202,7 +220,6 @@
       color: #333;
       font-size: 14px;
       align-self: flex-end;
-      background: url("../../assets/login/login_bottom.png") no-repeat center;
       background-size: 100% 100%;
       &:before {
         display: block;

@@ -1,6 +1,7 @@
 // 引入 axios
 import axios from 'axios';
 import test from '@/api/test.js';
+import loginApi from '@/api/login.js';
 import qs from 'qs';
 
 // import Cookies from 'js-cookie'
@@ -46,5 +47,6 @@ axios.interceptors.response.use(response => {
 });
 
 export default {
-  test
+  test,
+  loginApi
 };

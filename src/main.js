@@ -7,9 +7,11 @@ import Vuex from 'vuex';
 import router from './router';
 import store from './store';
 import 'font-awesome/css/font-awesome.css';
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 
 Vue.use(Vuex);
-
+Vue.use(iView);
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({

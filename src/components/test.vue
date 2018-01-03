@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-  import Api from '@/api/index.js';
+  import api from '@/api/index.js';
   export default {
     data () {
       return {
@@ -12,7 +12,7 @@
     },
     methods: {
       buttonClick () {
-        Api.test.first({ aa: 'sdfsfsdf' }).then(
+        api.test.first({ aa: 'sdfsfsdf' }).then(
           res => {
             console.log(res);
           }
