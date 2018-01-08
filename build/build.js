@@ -3,6 +3,7 @@ require('./check-versions')();
 process.env.NODE_ENV = 'production';
 
 var ora = require('ora');
+var server = require('pushstate-server');
 var rm = require('rimraf');
 var path = require('path');
 var chalk = require('chalk');
@@ -27,6 +28,14 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     }) + '\n\n');
 
     console.log(chalk.cyan('  Build complete.\n'));
+    if(process.env.build_preview){
+      server.start({
+        port: 9528,
+        directory: './dist',
+        file: '/index.html'
+      });
+      console.log('> Listening at ' +  'http://localhost:9528' + '\n')
+    }
     console.log(chalk.yellow(
       '  Tip: built files are meant to be served over an HTTP server.\n' +
       '  Opening index.html over file:// won\'t work.\n'

@@ -7,10 +7,8 @@ import qs from 'qs';
 // import Cookies from 'js-cookie'
 // const qs = require('qs')
 
-axios.defaults.timeout = '2500';
+axios.defaults.timeout = 5000;
 axios.defaults.responseType = 'json';
-axios.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.get['X-Requested-With'] = 'XMLHttpRequest';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.interceptors.request.use((request) => {
   // loading();
