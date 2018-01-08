@@ -30,7 +30,7 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     console.log(chalk.cyan('  Build complete.\n'));
     if(process.env.build_preview){
       server.start({
-        port: 9528,
+        port: 8001,
         directory: './dist',
         file: '/index.html'
       });
