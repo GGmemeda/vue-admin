@@ -9,7 +9,8 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/entry-client.js',
+    server: './src/entry-server.js'
   },
   externals: {
     'BMap': 'BMap'

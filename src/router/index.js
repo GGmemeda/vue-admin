@@ -2,18 +2,19 @@ import Vue from 'vue';
 import Router from 'vue-router';
 // import store from '../store';
 import test from '@/components/test';
+
 const _import = require('./_import_' + process.env.NODE_ENV);
 
 Vue.use(Router);
 
 const routes = [
   {
-    path: '/',
+    path: '/map',
     name: 'mapMain',
     component: _import('mapCenter/mapMain')
   },
   {
-    path: '/test',
+    path: '/',
     name: 'test',
     component: test
   },
@@ -31,7 +32,7 @@ const routes = [
   Array.prototype.push.apply(routes, m);
 });
 const router = new Router({
-  // mode: 'history',
+  mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: routes
 });
@@ -40,7 +41,8 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
     next();
   } else {
-    const useToken = localStorage.getItem('ucToken');
+    // 应使用cookie存储token否则token会窜,工具使用为js-cookie
+    const useToken = true || localStorage.getItem('ucToken');
     if (!useToken) {
       router.replace({
         path: '/login',
@@ -52,4 +54,7 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-export default router;
+export function createRouter () {
+  return router;
+}
+

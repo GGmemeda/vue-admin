@@ -16,7 +16,7 @@ const mutations = {
     state.user = user;
   }
 };
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state,
   actions,
   getters,
@@ -27,3 +27,7 @@ export default new Vuex.Store({
   strict: debug
   // plugins: debug ? [createLogger()] : []
 });
+
+export function createStore () {
+  return store;
+}

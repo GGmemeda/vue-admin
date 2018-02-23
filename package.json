@@ -21,6 +21,7 @@
     "js-md5": "^0.7.3",
     "vue": "^2.5.9",
     "vue-router": "^2.8.0",
+    "vue-server-renderer": "^2.5.13",
     "vuex": "^2.5.0"
   },
   "devDependencies": {
