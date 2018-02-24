@@ -9,14 +9,13 @@ const path = require('path');
 var VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
 
-// add hot-reload related code to entry chunks
-Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name]);
-});
 
-module.exports = merge(baseWebpackConfig, {
+const baseConfig = merge(baseWebpackConfig, {
+  entry: {
+    app: './src/entry-client.js',
+  },
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap})
   },
   // cheap-module-eval-source-map is faster for development
   devtool: '#cheap-module-eval-source-map',
@@ -38,3 +37,8 @@ module.exports = merge(baseWebpackConfig, {
     new VueSSRClientPlugin()
   ]
 });
+// add hot-reload related code to entry chunks
+Object.keys(baseConfig.entry).forEach(function (name) {
+  baseConfig.entry[name] = ['./build/dev-client'].concat(baseConfig.entry[name]);
+});
+module.exports=baseConfig;

@@ -14,7 +14,7 @@ const routes = [
     component: _import('mapCenter/mapMain')
   },
   {
-    path: '/',
+    path: '/test',
     name: 'test',
     component: test
   },

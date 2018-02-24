@@ -31,7 +31,6 @@ const getters = {
 const actions = {
   searchPlace ({ commit, state }, name) {
     console.log(state.all);
-    debugger;
   },
   getAllPoints ({ commit }) {
     mock.getPoints(points => {

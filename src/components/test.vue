@@ -1,5 +1,6 @@
 <template>
 <div>
+  <router-link :to="{ path: '/api/about' }">go about page</router-link>
   <button  @click="buttonClick">点击获取接口</button>
 </div>
 </template>
