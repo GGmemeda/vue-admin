@@ -9,12 +9,12 @@ Vue.use(Router);
 
 const routes = [
   {
-    path: '/map',
+    path: '/mapMain',
     name: 'mapMain',
     component: _import('mapCenter/mapMain')
   },
   {
-    path: '/test',
+    path: '/',
     name: 'test',
     component: test
   },
