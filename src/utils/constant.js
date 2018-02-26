@@ -1,2 +1,6 @@
-export const COMMON = { SERVER_NAME: '/manager-api' };
-export const SALT = '$%#^$^&';
+export const COMMON = {
+  MANAGER_API: '/manager-api',
+  TERMINAL_API: '/Terminal-Api'
+};
+
+export const SALT = '!%&qishiyun110';

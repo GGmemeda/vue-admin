@@ -28,6 +28,4 @@ const store = new Vuex.Store({
   // plugins: debug ? [createLogger()] : []
 });
 
-export function createStore () {
-  return store;
-}
+export default store;

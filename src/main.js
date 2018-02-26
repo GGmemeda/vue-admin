@@ -8,6 +8,8 @@ import store from './store';
 import 'font-awesome/css/font-awesome.css';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import * as filters from './filters';
+// import './icons';
 
 Vue.use(Vuex);
 Vue.use(iView);
@@ -19,6 +21,9 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: {App}
 });
 
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key]);
+});

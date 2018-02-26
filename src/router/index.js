@@ -54,7 +54,5 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-export function createRouter () {
-  return router;
-}
+export default  router;
 
