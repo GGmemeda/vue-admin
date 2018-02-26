@@ -1,24 +1,28 @@
 var utils = require('./utils');
+var path = require('path');
 var webpack = require('webpack');
 var config = require('../config');
 var merge = require('webpack-merge');
 var baseWebpackConfig = require('./webpack.base.conf');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const path = require('path');
-var VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
+// add hot-reload related code to entry chunks
+Object.keys(baseWebpackConfig.entry).forEach(function (name) {
+  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name]);
+});
 
+function resolveApp (relativePath) {
+  return path.resolve(relativePath);
+}
 
-const baseConfig = merge(baseWebpackConfig, {
-  entry: {
-    app: './src/entry-client.js',
-  },
+module.exports = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap})
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
   },
-  // cheap-module-eval-source-map is faster for development
-  devtool: '#cheap-module-eval-source-map',
+  // cheap-source-map is faster for development
+  devtool: '#cheap-source-map',
+  cache: true,
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env
@@ -28,17 +32,12 @@ const baseConfig = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      favicon: path.join(__dirname, '../src/assets/favicon.png'),
+      favicon: path.join(__dirname, '../favicon.png'),
       filename: 'index.html',
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin(),
-    new VueSSRClientPlugin()
+    new FriendlyErrorsPlugin()
   ]
 });
-// add hot-reload related code to entry chunks
-Object.keys(baseConfig.entry).forEach(function (name) {
-  baseConfig.entry[name] = ['./build/dev-client'].concat(baseConfig.entry[name]);
-});
-module.exports=baseConfig;
+

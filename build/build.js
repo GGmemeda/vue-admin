@@ -9,8 +9,7 @@ var path = require('path');
 var chalk = require('chalk');
 var webpack = require('webpack');
 var config = require('../config');
-var webpackConfig = require('./webpack.prod.client');
-var webpackServerConfig = require('./webpack.prod.server');
+var webpackConfig = require('./webpack.prod.conf');
 
 var spinner = ora('building for production...');
 spinner.start();
@@ -29,20 +28,17 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     }) + '\n\n');
 
     console.log(chalk.cyan('  Build complete.\n'));
-    if(process.env.build_preview){
+    if (process.env.build_preview) {
       server.start({
         port: 9528,
         directory: './dist',
         file: '/index.html'
       });
-      console.log('> Listening at ' +  'http://localhost:9528' + '\n')
+      console.log('> Listening at ' + 'http://localhost:9528' + '\n');
     }
     console.log(chalk.yellow(
       '  Tip: built files are meant to be served over an HTTP server.\n' +
       '  Opening index.html over file:// won\'t work.\n'
     ));
-  });
-  webpack(webpackServerConfig , function (err, stats) {
-    if (err) throw err;
   });
 });
