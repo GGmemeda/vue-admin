@@ -19,6 +19,11 @@ const routes = [
     component: test
   },
   {
+    path: '/about',
+    name: 'about',
+    component: _import('about/about')
+  },
+  {
     path: '/login',
     name: 'login',
     component: _import('login/login'),

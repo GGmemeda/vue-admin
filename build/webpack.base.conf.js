@@ -43,7 +43,7 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        use:[
+        use: [
           {
             loader: 'vue-loader',
             options: vueLoaderConfig
