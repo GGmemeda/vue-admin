@@ -141,7 +141,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" type="text/scss" scoped>
+<style lang="less" type="text/less" scoped>
   .map-header {
     .fade-enter-active, .fade-leave-active {
       transition: opacity 1s

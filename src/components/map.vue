@@ -78,7 +78,7 @@
     }
   };
 </script>
-<style scoped lang="scss" type="text/scss">
+<style scoped lang="less" type="text/less">
   #baiduMap {
     zoom: 1;
     top: 0;

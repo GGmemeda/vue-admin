@@ -103,14 +103,14 @@
     }
   };
 </script>
-<style lang="scss" type="text/scss">
-  $green: #32b7a0;
-  $gary: #d4d4d4;
-  $green-hover: #2f9e8b;
-  $orange: #f88b3a;
-  $orange-hover: #c77538;
-  $input-border-color: #bababa;
-  $font-blue: #23527c;
+<style lang="less" type="text/less">
+  @green: #32b7a0;
+  @gary: #d4d4d4;
+  @green-hover: #2f9e8b;
+  @orange: #f88b3a;
+  @orange-hover: #c77538;
+  @input-border-color: #bababa;
+  @font-blue: #23527c;
 
   .login {
     height: 100%;
@@ -156,7 +156,7 @@
       float: right;
       .lang-item {
         display: inline-block;
-        border-right: 1px solid $gary;
+        border-right: 1px solid @gary;
         margin: 5px 0;
         padding: 0 10px;
         cursor: pointer;
@@ -164,7 +164,7 @@
           border-right: none;
         }
         &:hover {
-          color: $font-blue;
+          color: @font-blue;
         }
       }
     }
@@ -263,16 +263,16 @@
         height: 40px;
         background-color: #fff;
         padding-left: 45px;
-        border: 1px solid $gary;
+        border: 1px solid @gary;
         font-size: 16px;
         line-height: 40px;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
         &:focus {
-          border-color: $green;
+          border-color: @green;
           .login-icon {
-            color: $green;
+            color: @green;
           }
         }
       }
@@ -320,7 +320,7 @@
       width: 282px;
       font-size: 21px;
       font-weight: bold;
-      box-shadow: 0 5px 10px $green;
+      box-shadow: 0 5px 10px @green;
     }
 
     .errorMsg {

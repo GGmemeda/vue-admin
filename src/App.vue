@@ -10,8 +10,8 @@
   };
 </script>
 
-<style type="text/scss" lang="scss">
-  @import './style/common.scss';
+<style type="text/less" lang="less">
+  @import 'style/common.less';
   @import "./fonts/iconfont.css";
 
 
