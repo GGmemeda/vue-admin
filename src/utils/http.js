@@ -1,15 +1,15 @@
 'use strict';
 import axios from 'axios';
 import qs from 'qs';
-import store from '../store';
-import Vue from 'vue';
+// import store from '../store';
+import iView from 'iview';
 // 创建axios实例
 const $api = axios.create({
   timeout: 5000 // 请求超时时间
 });
 
 $api.interceptors.request.use((request) => {
-  store.commit('showLoading', { loading: true });
+  iView.LoadingBar.start();
   if (request.method === 'post') {
     request.headers['Content-Type'] = 'application/json';
     axios.transformRequest = [function (data) {
@@ -37,27 +37,27 @@ $api.interceptors.response.use(
     if (responseData.code === status.OVER_TIME) {
       return responseData;
     } else {
-      const toastUse = {
-        showPositionValue: true,
-        type: 'warn',
-        time: 2000,
-        width: '10em',
-        text: responseData.message
-      };
-      Vue.$vux.toast.show(toastUse);
+      // const toastUse = {
+      //   showPositionValue: true,
+      //   type: 'warn',
+      //   time: 2000,
+      //   width: '10em',
+      //   text: responseData.message
+      // };
+      iView.LoadingBar.finish();
       return responseData;
     }
   },
   error => {
-    const toastUse = {
-      showPositionValue: true,
-      type: 'warn',
-      time: 2000,
-      width: '10em',
-      text: error.message
-    };
-    Vue.$vux.toast.show(toastUse);
-    store.commit('showLoading', { loading: false });
+    // const toastUse = {
+    //   showPositionValue: true,
+    //   type: 'warn',
+    //   time: 2000,
+    //   width: '10em',
+    //   text: error.message
+    // };
+    // Vue.$vux.toast.show(toastUse);
+    iView.LoadingBar.finish();
     // console.log('err' + error);// for debug
     return Promise.reject(error);
   }

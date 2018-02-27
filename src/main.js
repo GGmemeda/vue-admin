@@ -11,8 +11,8 @@ import 'iview/dist/styles/iview.css';
 import * as filters from './filters';
 // import './icons';
 
-Vue.use(Vuex);
 Vue.use(iView);
+Vue.use(Vuex);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
