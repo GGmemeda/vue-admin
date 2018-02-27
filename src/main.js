@@ -8,6 +8,7 @@ import store from './store';
 import 'font-awesome/css/font-awesome.css';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import './style/theme.less';
 import * as filters from './filters';
 // import './icons';
 
