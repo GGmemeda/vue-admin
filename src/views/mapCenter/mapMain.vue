@@ -100,9 +100,10 @@
 </template>
 
 <script>
-  import { createNamespacedHelpers, mapGetters as allGetters } from 'vuex';
+  import {createNamespacedHelpers, mapGetters as allGetters} from 'vuex';
   import bMap from '../../components/map.vue';
-  const { mapState, mapGetters, mapActions } = createNamespacedHelpers('mapCenter');
+
+  const {mapState, mapGetters, mapActions} = createNamespacedHelpers('mapCenter');
 
   export default {
     name: 'baiduMap',
@@ -119,12 +120,12 @@
 
     },
     methods: {
-      searchPlace () {
+      searchPlace() {
         this.animation = !this.animation;
       },
       ...mapActions([])
     },
-    data () {
+    data() {
       return {
         searchName: '',
         animation: true
@@ -133,7 +134,7 @@
     components: {
       bMap
     },
-    created () {
+    created() {
       this.$store.dispatch('mapCenter/getAllPoints');
     }
 
