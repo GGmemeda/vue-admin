@@ -4,7 +4,7 @@ export const UrlParams = function () {
   let num = str.indexOf('?');
   str = str.substr(num + 1);
 
-  let arr = str.split('&');
+  const arr = str.split('&');
   for (let i = 0; i < arr.length; i++) {
     num = arr[i].indexOf('=');
     if (num > 0) {
