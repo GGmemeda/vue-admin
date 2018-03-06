@@ -10,10 +10,13 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import './style/theme.less';
 import * as filters from './filters';
+import LazyLoad from './directives/lazyLoad.js';
 // import './icons';
 
 Vue.use(iView);
 Vue.use(Vuex);
+Vue.use(LazyLoad);
+
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

@@ -26,6 +26,7 @@ module.exports = {
     'generator-star-spacing': 0,
     'no-undef': 0,
     'semi': ["error", "always"],//语句强制分号结尾
+    'no-extend-native':0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }

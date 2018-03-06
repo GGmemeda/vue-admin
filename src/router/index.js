@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 // import store from '../store';
-import test from '@/components/test';
 
 const _import = require('./_import_' + process.env.NODE_ENV);
 
@@ -16,7 +15,7 @@ const routes = [
   {
     path: '/',
     name: 'test',
-    component: test
+    component: _import('test/index')
   },
   {
     path: '/about',

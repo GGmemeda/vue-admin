@@ -30,33 +30,20 @@ $api.interceptors.request.use((request) => {
 $api.interceptors.response.use(
   response => {
     const responseData = response.data;
-    store.commit('showLoading', { loading: false });
+    iView.LoadingBar.finish();
     if (responseData.code === status.SUCCESS) {
       return responseData.data;
     }
     if (responseData.code === status.OVER_TIME) {
       return responseData;
     } else {
-      // const toastUse = {
-      //   showPositionValue: true,
-      //   type: 'warn',
-      //   time: 2000,
-      //   width: '10em',
-      //   text: responseData.message
-      // };
+      // service back error message
       iView.LoadingBar.finish();
       return responseData;
     }
   },
   error => {
-    // const toastUse = {
-    //   showPositionValue: true,
-    //   type: 'warn',
-    //   time: 2000,
-    //   width: '10em',
-    //   text: error.message
-    // };
-    // Vue.$vux.toast.show(toastUse);
+    // err message
     iView.LoadingBar.finish();
     // console.log('err' + error);// for debug
     return Promise.reject(error);
