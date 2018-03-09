@@ -108,7 +108,7 @@ seo分类:A.白帽seo B.黑帽seo
       22.js解析如下：
       23.显示页面（HTML解析过程中会逐步显示页面）
 五、性能优化，前端、非前端
-      1、尽量减少HTTP请求次数
+      1、尽量减少HTTP请求次数:合并图片（css sprites），合并CSS和JS文件；图片较多的页面也可以使用 lazyLoad 等技术进行优化。
       2、减少DNS查找次数
       3、避免跳转
       4、可缓存的AJAX
@@ -117,4 +117,17 @@ seo分类:A.白帽seo B.黑帽seo
         3)、精简JavaScript；
         4)、避免跳转；
         5)、配置ETags。
+      5.Reflow(重排):尽量避免重排，例如:改变窗囗大小、改变文字大小、内容的改变、浏览器窗口变化，style属性的改变等等。
+                     降低性能方法:不用内联style,全部使用class,内联style会导致重绘。
+      6.请减少对DOM的操作
+      7.使用CDN加速
+      8.注意控制Cookie大小和污染
+      9.添加Expire/Cache-Control头。
+      10.启用Gzip压缩
+      11.避免在CSS中使用Expressions:css表达式不可使用
+      12.避免重定向
+      13.配置实体标签（ETag）
+      14.AJAX 缓存
+      15.慎用 with
+      16.减少作用域链查找
 
