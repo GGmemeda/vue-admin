@@ -58,10 +58,9 @@
 
 </template>
 <script type='es6'>
-  import api from '@/api/index.js';
   import MD5 from 'js-md5';
   import { Base64 } from 'js-base64';
-  import { SALT } from 'utils/constant'
+  import { SALT } from '@_utils/constant'
 
   export default {
     name: 'login',

@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-  import api from '@/api/index.js';
   import imglazy from '@/components/imgLazyLoad';
+  import * as testApi from '@/api/test.js';
 
   export default {
     components: {
@@ -18,7 +18,7 @@
     },
     methods: {
       buttonClick () {
-        api.test.first({ aa: 'sdfsfsdf' }).then(
+        testApi.first({ aa: 'sdfsfsdf' }).then(
           res => {
             console.log(res);
           }

@@ -13,6 +13,4 @@
 <style type="text/less" lang="less">
   @import 'style/common.less';
   @import "./fonts/iconfont.css";
-
-
 </style>
