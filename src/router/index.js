@@ -29,6 +29,23 @@ const routes = [
     meta: {
       requireAuth: true
     }
+  },
+  {
+    path: '/components',
+    name: 'components-componentsDemo',
+    component: _import('componentsDemo/index'),
+    meta: {
+      title: 'components',
+      icon: 'component'
+    },
+    children: [
+      {
+        path: 'downNumber',
+        component: _import('componentsDemo/downNumber'),
+        name: 'downNumber-demo',
+        meta: { title: 'downNumber' }
+      }
+    ]
   }
 ];
 
@@ -36,7 +53,7 @@ const routes = [
   Array.prototype.push.apply(routes, m);
 });
 const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: routes
 });
