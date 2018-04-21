@@ -44,6 +44,12 @@ const routes = [
         component: _import('componentsDemo/downNumber'),
         name: 'downNumber-demo',
         meta: { title: 'downNumber' }
+      },
+      {
+        path: 'calendarDemo',
+        component: _import('componentsDemo/calendarDemo'),
+        name: 'calendarDemo',
+        meta: { title: 'calendarDemo' }
       }
     ]
   }
