@@ -1,85 +1,83 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import store from '../store';
-
-const _import = require('./_import_' + process.env.NODE_ENV);
+import Layout from '@/views/layout/Layout';
+import zhc from '../utils/wordsconfig.js';
 
 Vue.use(Router);
 
-const routes = [
-  {
-    path: '/mapMain',
-    name: 'mapMain',
-    component: _import('mapCenter/mapMain')
-  },
-  {
-    path: '/',
-    name: 'test',
-    component: _import('test/index')
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: _import('about/about')
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: _import('login/login'),
-    meta: {
-      requireAuth: true
-    }
-  },
-  {
-    path: '/components',
-    name: 'components-componentsDemo',
-    component: _import('componentsDemo/index'),
-    meta: {
-      title: 'components',
-      icon: 'component'
-    },
-    children: [
-      {
-        path: 'downNumber',
-        component: _import('componentsDemo/downNumber'),
-        name: 'downNumber-demo',
-        meta: { title: 'downNumber' }
-      },
-      {
-        path: 'calendarDemo',
-        component: _import('componentsDemo/calendarDemo'),
-        name: 'calendarDemo',
-        meta: { title: 'calendarDemo' }
-      }
-    ]
+/**
+ * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
+ * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
+ *                                if not set alwaysShow, only more than one route under the children
+ *                                it will becomes nested mode, otherwise not show the root menu
+ * redirect: noredirect           if `redirect:noredirect` 将不会在面包屑中重定向
+ * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * meta : {
+    roles: ['admin','editor']    will control the page roles (you can set multiple roles)
+    title: 'title'               the name show in submenu and breadcrumb (recommend set)
+    icon: 'svg-name'             the icon show in the sidebar,
+    noCache: true                if true ,the page will no be cached(default is false)
   }
+ **/
+export const constantRouterMap = [{
+  path: '/login',
+  component: () =>
+    import('@/views/login/index'),
+  hidden: true
+}, {
+  path: '',
+  component: Layout,
+  redirect: 'dashboard',
+  children: [{
+    path: 'dashboard',
+    component: () => import('@/views/dashboard/index'),
+    name: 'Dashboard',
+    meta: { title: zhc.route.dashboard, icon: 'cIcon icon-home1', noCache: true, hideBread: true }
+  }]
+
+}, {
+  path: '/components',
+  component: Layout,
+  redirect: 'noredirect',
+  name: 'components',
+  meta: {
+    title: zhc.route.components,
+    icon: 'component'
+  },
+  children: [{
+    path: 'index',
+    component: () => import('../views/components_demo/index'),
+    name: '说明',
+    meta: { title: zhc.route['componentsIndex'] }
+  }, {
+    path: 'cTable',
+    component: () =>
+      import('../views/components_demo/CTable.vue'),
+    name: 'cTable',
+    meta: { title: zhc.route['cTable'] }
+  }, {
+    path: 'CInput',
+    component: () =>
+      import('../views/components_demo/CInput.vue'),
+    name: 'CInput',
+    meta: { title: zhc.route['CInput'] }
+  }]
+},
+{
+  path: '/404',
+  component: () =>
+      import('@/views/errorPage/404')
+  // hidden: true
+}, {
+  path: '/401',
+  component: () =>
+      import('@/views/errorPage/401'),
+  hidden: true
+}, { path: '*', redirect: '/404', hidden: true }
 ];
 
-[].forEach((m) => {
-  Array.prototype.push.apply(routes, m);
-});
-const router = new Router({
-  // mode: 'history',
-  scrollBehavior: () => ({ y: 0 }),
-  routes: routes
-});
-// 全局导航钩子
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) {
-    next();
-  } else {
-    // 应使用cookie存储token否则token会窜,工具使用为js-cookie
-    const useToken = true || localStorage.getItem('ucToken');
-    if (!useToken) {
-      router.replace({
-        path: '/login',
-        redirect: to.fullPath
-      });
-    } else {
-      next();
-    }
-  }
+export default new Router({
+  routes: constantRouterMap
 });
 
-export default router;
-
+export const asyncRouterMap = [];

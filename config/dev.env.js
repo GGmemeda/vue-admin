@@ -1,5 +1,9 @@
-module.exports ={
-  NODE_ENV: '"development"',
-  ENV_CONFIG: '"dev"',
-  BASE_URL:'"192.168.0.101:3000"'
-};
+'use strict'
+const merge = require('webpack-merge')
+const prodEnv = require('./prod.env')
+
+
+module.exports = merge(prodEnv, {
+    NODE_ENV: '"development"',
+    BASE_API: '"http://115.29.175.3:92/handle"'
+})

@@ -1,33 +1,33 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+// 用“import”命令加载VUE构建版本
+// 在WebPACK.BASE.CONF中设置了别名（运行时单独或运行时）
 import Vue from 'vue';
 import App from './App';
-import Vuex from 'vuex';
 import router from './router';
 import store from './store';
-import 'font-awesome/css/font-awesome.css';
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
-import './style/theme.less';
+import { setInterceptors } from './utils/request';
+// 路由许可
+import './permission';
+import Element from 'element-ui'; // ElementUI
+import 'element-ui/lib/theme-chalk/index.css';
+import '@/styles/index.scss'; // global css
+import './mock'; // simulation data
+import './icons'; // icon
+import './components/plugins';// 全局映入通用自定义插件
 import * as filters from './filters';
-import LazyLoad from './directives/lazyLoad.js';
-// import './icons';
-
-Vue.use(iView);
-Vue.use(Vuex);
-Vue.use(LazyLoad);
 
 Vue.config.productionTip = false;
+Vue.use(Element);
+setInterceptors(store);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
-  template: '<App/>',
-  components: { App }
+  render: h => h(App)
 });
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });
+

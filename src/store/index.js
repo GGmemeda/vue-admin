@@ -1,31 +1,30 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import * as actions from './actions';
-import * as getters from './getters';
-import mapCenter from './modules/mapCenter/mapCenter';
-// import createLogger from '../../../src/plugins/logger'
+import user from './modules/user';
+import permission from './modules/permission';
+import app from './modules/app';
+import getters from './getters';
+import errorLog from './modules/errorLog';
+import tagsView from './modules/tagsView';
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
-const debug = process.env.NODE_ENV !== 'production';
-const state = {
-  user: false
-};
-const mutations = {
-  isLogin (state, user) {
-    state.user = user;
-  }
-};
+const vuexPersisted = createPersistedState({
+  key: 'persist_main',
+  storage: window.localStorage,
+  paths: ['user']
+});
 const store = new Vuex.Store({
-  state,
-  actions,
-  getters,
-  mutations,
   modules: {
-    mapCenter: mapCenter
+    app,
+    user,
+    errorLog,
+    permission,
+    tagsView
   },
-  strict: debug
-  // plugins: debug ? [createLogger()] : []
+  getters,
+  plugins: [vuexPersisted]
 });
 
 export default store;
