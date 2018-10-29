@@ -9,19 +9,19 @@ import { getToken } from './auth';
 
 axios.defaults.timeout = 60000;
 export const setInterceptors = (store) => {
-  axios.interceptors.request.use(function(config) {
-    if (getToken('token')) {
-      config.headers.Authorization = `${getToken('token') || ''}`;
+  axios.interceptors.request.use(function (config) {
+    if (getToken('token') && getToken('token') !== 'admin') {
+      config.headers.Authorization = `${getToken('token')}`;
     }
     return config;
-  }, function(err) {
+  }, function (err) {
     return Promise.reject(err);
   });
 
-  axios.interceptors.response.use(function(response) {
+  axios.interceptors.response.use(function (response) {
     const data = response.data;
     if (data.code !== 0 && !response.config.download) {
-      Message.error(data.msg);
+      Message.error(data.message);
     }
     if (data.code === 401) {
       Message.error('请重新登陆');
@@ -29,9 +29,9 @@ export const setInterceptors = (store) => {
       // clearAuth();
     }
     return response;
-  }, function(error) {
-    const originalRequest = error.config;
-    // 请求超时
+  }, function (error) {
+    let originalRequest = error.config;
+    //请求超时
     if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1 && !originalRequest._retry) {
       Message.error('网络超时');
     } else {
@@ -47,7 +47,8 @@ const fetch = (options) => {
     data,
     fetchType,
     url,
-    config
+    config,
+    paramToString
   } = options;
 
   var cloneData = Object.assign({}, data);
@@ -59,13 +60,14 @@ const fetch = (options) => {
     }
     const match = pathToRegexp.parse(url);
     url = pathToRegexp.compile(url)(data);
-    for (const item of match) {
+    for (let item of match) {
       if (item instanceof Object && item.name in cloneData) {
         delete cloneData[item.name];
       }
     }
     url = domin + url;
     cloneData = (cloneData && '__self__' in cloneData) ? cloneData['__self__'] : cloneData;
+
   } catch (e) {
     Message.error(e.message);
   }
@@ -75,7 +77,7 @@ const fetch = (options) => {
       jsonp(url, {
         param: `${qs.stringify(data)}&callback`,
         name: `jsonp_${new Date().getTime()}`,
-        timeout: 4000
+        timeout: 4000,
       }, (error, result) => {
         if (error) {
           reject(error);
@@ -83,18 +85,22 @@ const fetch = (options) => {
         resolve({ statusText: 'OK', status: 200, data: result });
       });
     });
-  } else if (fetchType === 'YQL') {
+  }
+  else if (fetchType === 'YQL') {
     url = `http://query.yahooapis.com/v1/public/yql?q=select * from json where url='${options.url}?${encodeURIComponent(qs.stringify(options.data))}'&format=json`;
     data = null;
+  }
+  if (paramToString) {
+    cloneData = JSON.stringify(cloneData);
   }
   switch (method.toLowerCase()) {
     case 'get':
       return axios.get(url, {
-        params: cloneData
+        params: cloneData,
       }, config);
     case 'delete':
       return axios.delete(url, {
-        data: cloneData
+        data: cloneData,
       }, config);
     case 'post':
       return axios.post(url, cloneData, config);
@@ -107,7 +113,7 @@ const fetch = (options) => {
   }
 };
 
-export default function request(options) {
+export default function request (options) {
   if (options.url && options.url.indexOf('//') > -1) {
     const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`;
     if (window.location.origin !== origin) {
@@ -126,14 +132,14 @@ export default function request(options) {
     let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data;
     if (data instanceof Array) {
       data = {
-        list: data
+        list: data,
       };
     }
     return Promise.resolve({
       _success: true,
       _message: statusText,
       _statusCode: status,
-      ...data
+      ...data,
     });
   }).catch((error) => {
     const { response } = error;
@@ -149,4 +155,4 @@ export default function request(options) {
     }
     return Promise.reject({ _success: false, _statusCode: statusCode, _message: msg });
   });
-}
+};

@@ -3,7 +3,7 @@ import RenderFormGroup from './form-group';
 import { Form } from 'element-ui';
 
 export default {
-  render(h) {
+  render (h) {
     this.content.forEach(this.initItemValue); // handle default value
     return h(
       'el-form', {
@@ -37,9 +37,9 @@ export default {
     RenderFormItem,
     RenderFormGroup
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
-      // proxy
+// proxy
       Object.keys(Form.methods).forEach((item) => {
         this[item] = this.$refs.elForm[item];
       });
@@ -50,13 +50,13 @@ export default {
       type: Array,
       required: true
     },
-    // 禁用所有表单
+// 禁用所有表单
     disabled: {
       type: Boolean,
       default: false
     }
   }),
-  data() {
+  data () {
     return {
       value: {} // 表单数据对象
     };
@@ -66,17 +66,17 @@ export default {
      * 初始化每个表单原子的默认值
      * @param  {Object} item 表单原子描述
      */
-    initItemValue(item) {
+    initItemValue (item) {
       if (!item.$id || this.value[item.$id] !== undefined) return;
       let defaultVal;
       if (item.$type === 'group') {
-        // group
+// group
         defaultVal = item.$items.reduce((acc, cur) => {
           cur.$default && cur.$id && (acc[cur.$id] = cur.$default);
           return acc;
         }, {});
       } else if (item.$default !== undefined) {
-        // not group
+// not group
         defaultVal = item.$default;
       }
       defaultVal !== undefined && this.updateValue({ id: item.$id, value: defaultVal });
@@ -86,17 +86,17 @@ export default {
      * @param  {String} options.id 表单ID
      * @param  {All} options.value 表单数据
      */
-    updateValue({ id, value }) {
+    updateValue ({ id, value }) {
       this.value = Object.assign({}, this.value, {
         [id]: value
       });
     },
-    formValueChange(key, value) {
+    formValueChange (key, value) {
       this.$emit('onChange', data.$id, value);
     },
-    // 对外提供获取表单数据的函数
-    getFormValue() {
+// 对外提供获取表单数据的函数
+    getFormValue () {
       return this.value;
-    }
+    },
   }
 };

@@ -10,7 +10,7 @@ export default {
     value: Object,
     disabled: Boolean
   },
-  render(h) {
+  render (h) {
     return h(
       'div', {}, this.data.$items.map((item, index) => {
         const itemValue = this.itemValue || {};
@@ -26,7 +26,7 @@ export default {
             },
             on: {
               updateValue: ({ id, value }) => {
-                const val = Object.assign({}, itemValue, {
+                let val = Object.assign({}, itemValue, {
                   [id]: value
                 });
                 this.$emit('updateValue', {

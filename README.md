@@ -1,3 +1,9 @@
+
+English | [简体中文](./README.zh-CN.md)
+
+## Introduction
+[cloudUi] 包含jsx模板语法
+
 ## Getting started
 
 ```bash

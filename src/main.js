@@ -10,6 +10,7 @@ import './permission';
 import Element from 'element-ui'; // ElementUI
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/styles/index.scss'; // global css
+import 'quill/dist/quill.snow.css'
 import './mock'; // simulation data
 import './icons'; // icon
 import './components/plugins';// 全局映入通用自定义插件

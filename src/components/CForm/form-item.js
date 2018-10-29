@@ -1,8 +1,9 @@
 import mixinOptionExtensions from './mixin-option';
 import mixinEnableWhen from './mixin-enable';
 import { toCamelCase, isObject } from './utils';
+import elQuill from '../CQuill/index';
 
-function validator(data) {
+function validator (data) {
   if (!data) {
     throw new Error('item data must be an Object.');
   } else if (!data.$id) {
@@ -13,12 +14,15 @@ function validator(data) {
 }
 
 export default {
+  components:{
+    elQuill
+  },
   mixins: [mixinOptionExtensions, mixinEnableWhen],
   props: {
     data: Object,
     prop: {
       type: String,
-      default() {
+      default () {
         return this.data.$id;
       }
     },
@@ -28,11 +32,11 @@ export default {
   },
   computed: {
     // 是否显示
-    _show() {
+    _show () {
       return this.getEnableWhenSatatus();
     }
   },
-  render(h) {
+  render (h) {
     validator(this.data); // 对数据进行简单校验
     return h(
       'el-form-item', {
@@ -56,10 +60,10 @@ export default {
      * @param  {Object} data 表单属性定义
      * @param  {All} value 单项表单数据值
      */
-    renderFormItemContent(h, data, value) {
-      const obj = isObject(data.$el) ? data.$el : {};
-      const elType = data.$type === 'checkbox-button' ? 'checkbox-group' : data.$type === 'radio-button' ? 'radio-group' : data.$type;
-      const props = Object.assign({}, obj, { value });
+    renderFormItemContent (h, data, value) {
+      let obj = isObject(data.$el) ? data.$el : {};
+      let elType = data.$type === 'checkbox-button' ? 'checkbox-group' : data.$type === 'radio-button' ? 'radio-group' : data.$type;
+      let props = Object.assign({}, obj, { value });
       this.disabled && (props.disabled = this.disabled); // 只能全局禁用, false时不处理
       return h('el-' + elType, {
         attrs: props, // 用于支持placeholder等原生属性(同时造成dom上挂载一些props)
@@ -75,7 +79,7 @@ export default {
         }
       }, [
         (() => {
-          const optRenderer = this[`${toCamelCase(data.$type)}_opt`];
+          let optRenderer = this[`${toCamelCase(data.$type)}_opt`];
           if (typeof optRenderer === 'function' && Array.isArray(data.$options)) {
             return data.$options.map(optRenderer);
           }
