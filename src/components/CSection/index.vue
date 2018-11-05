@@ -5,7 +5,9 @@
       <slot class="right-control" name="control"></slot>
     </div>
     <div class="content-out">
-      <slot></slot>
+      <el-scrollbar style="height:100%">
+        <slot></slot>
+      </el-scrollbar>
     </div>
   </div>
 </template>
@@ -24,22 +26,26 @@
 
 <style scoped rel="stylesheet/scss" lang="scss">
   .section-wrapper {
-    height: calc(100vh - 75px);
+    margin: 0 24px;
     .page-name {
-      padding: 16px 0 16px 40px;
+      padding: 16px 0 16px 19px;
       font-size: 20px;
       line-height: normal;
       background: #fff;
       font-weight: normal;
       font-stretch: normal;
       color: rgba(0, 0, 0, 0.85);
-      margin-bottom: 20px;
+      margin-bottom: 4px;
     }
 
     .content-out {
       height: calc(100vh - 150px);
       padding-bottom: 30px;
-      overflow: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    /deep/ .el-scrollbar__wrap {
+      overflow-x: hidden;
     }
   }
 </style>

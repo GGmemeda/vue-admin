@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-const TokenKey = 'SYSWECHAT-Token';
+const TokenKey = 'access-token';
 
 export function getToken() {
   return Cookies.get(TokenKey);

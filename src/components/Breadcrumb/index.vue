@@ -45,12 +45,11 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .bread-out {
-    background: #fff;
     .app-breadcrumb.el-breadcrumb {
       display: inline-block;
       font-size: 14px;
-      margin-left: 24px;
-      padding: 16px 0 16px 0;
+      margin-left:43px;
+      padding: 9px 0;
       position: relative;
       top: 2px;
       .no-redirect {

@@ -1,6 +1,6 @@
 <template>
   <el-upload
-    class="upload-demo"
+    class="upload-demo avatar-uploader"
     action="https://jsonplaceholder.typicode.com/posts/"
     :on-preview="handlePreview"
     :on-remove="handleRemove"
@@ -14,8 +14,8 @@
     v-bind="bindAttrs"
   >
     <slot>
-      <el-button size="small" type="primary">点击上传</el-button>
-      <div slot="tip" class="el-upload__tip">{{tips}}</div>
+      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </slot>
   </el-upload>
 </template>
@@ -27,6 +27,9 @@
       limit: {
         type: Number,
         default: 3
+      },
+      imageUrl:{
+        type:String,
       },
       limitSize: {
         type: Number,
@@ -42,7 +45,7 @@
       },
       bindAttrs: {
         type: Object,
-        default: {}
+        default: ()=>{}
       }
 
     },
@@ -79,3 +82,24 @@
     }
   };
 </script>
+<style scoped rel="stylesheet/scss" lang="scss">
+  /deep/.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  /deep/.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  /deep/.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    text-align: center;
+  }
+  /deep/.avatar {
+    display: block;
+    width: 100%;
+  }
+</style>

@@ -1,16 +1,16 @@
 <template>
-  <div class="search-bar-out" v-if="fields">
+  <div class="search-bar-out" v-if="fields" ref="searchBar">
     <template v-for="field in fields">
       <div class="search-item-out">
         <div class="search-item">
           <div class="title" :style='{width: field.labelWidth}' v-if="field.label">{field.label}：</div>
-          <div :style="{width: (field.width || 180)+'px'}">
-            <el-input v-bind="field.$el" v-if="field.type==='input'" v-model="data[field.key]"
+          <div :style="{width:(field.width?field.width:field.type==='searchInput'?220:180)+'px'}">
+            <el-input v-bind="field.$el" v-on="field.$on" v-if="field.type==='input'" v-model="currentData[field.key]"
                       :placeholder="field.placeholder||'请填写内容'"></el-input>
             <el-select v-bind="field.$el"
-                       v-else-if="field.type==='select'" v-model="data[field.key]"
-                       :placeholder="field.placeholder||'请选择'"
-                       clearable="true"
+                       v-on="field.$on"
+                       v-else-if="field.type==='select'" v-model="currentData[field.key]"
+                       :clearable="true"
                        @change="handleChange(field)"
 
             >
@@ -23,9 +23,9 @@
               </el-option>
             </el-select>
             <el-input-number v-bind="field.$el"
-                             v-else-if="field.type==='inputNumber'" v-model="data[field.key]"
+                             v-else-if="field.type==='inputNumber'" v-model="currentData[field.key]"
                              :placeholder="field.placeholder||'请填写内容'"
-                             clearable="true"
+                             :clearable="true"
                              @change="handleChange(field)"
             >
             </el-input-number>
@@ -33,21 +33,23 @@
               v-else-if="field.type==='searchInput'"
               v-bind="field.$el"
               v-on="field.$on"
-              clearable="true"
-              @keyup.native.enter="field.$onClick(data[field.key],data)"
-              v-model="data[field.key]">
-              <i slot="suffix" @click="field.$onClick(data[field.key],data)" class="el-input__icon el-icon-search"></i>
+              :clearable="true"
+              class="common-search-input"
+              @keyup.native.enter="field.$onClick(currentData[field.key],currentData)"
+              v-model="currentData[field.key]">
+              <i  slot="append" @click="field.$onClick(currentData[field.key],currentData)" class="el-icon-search"></i>
             </el-input>
             <el-date-picker
               v-else-if="field.type==='date'"
               v-bind="field.$el"
+              v-on="field.$on"
               :type="field.$el&&field.$el.type||'daterange'"
               style="width:100%"
-              @change="handleChange(field)"
               :range-separator="field.$el&&field.$el.separator||'-'"
               :start-placeholder="field.$el&&field.$el.placeholder&&field.$el.placeholder[0]||'开始日期'"
               :end-placeholder="field.$el&&field.$el.placeholder&&field.$el.placeholder[0]||'结束日期'"
-              v-model="data[field.key]"
+              v-model="currentData[field.key]"
+              @change="handleChange(field)"
             >
             </el-date-picker>
           </div>
@@ -55,22 +57,26 @@
       </div>
     </template>
     <el-button v-if="showSearchButton" type="primary" icon="el-icon-search">查询</el-button>
-    <el-button @click="searchBarRefresh()" type="primary" icon="el-icon-refresh"></el-button>
+    <el-button class="refresh-button" @click="searchBarRefresh" type="primary" icon="el-icon-refresh"></el-button>
   </div>
 </template>
 
 <script>
   export default {
     name: 'search-bar',
+    data () {
+      return {
+        currentData: this.value === undefined || this.value === null
+          ? ''
+          : this.value,
+      };
+    },
     props: {
       fields: {
         type: Array,
       },
-      data: {
+      value: {
         type: Object,
-        test: '',
-        default: {},
-        required: true,
       },
       showSearchButton: {
         type: Boolean,
@@ -79,14 +85,23 @@
     },
     methods: {
       handleChange (field) {
-        console.log(field);
-        const changeData = this.data[field.key];
+        const changeData = this.currentData[field.key];
         this.$emit('onChange', changeData, field);
       },
       searchBarRefresh () {
-        this.$emit('refresh', this.data);
+        this.$emit('refresh', {});
       }
-    }
+    },
+    watch: {
+      value: {
+        handler () {
+          this.currentData = this.value;
+        },
+        immediate: true,
+        deep: true
+      },
+
+    },
   };
 </script>
 
@@ -140,6 +155,23 @@
           }
         }
       }
+    }
+    .common-search-input{
+      /deep/ .el-input-group__append{
+        background: #409EFF;
+        color: #fff;
+        border:1px solid #409EFF;
+      }
+    }
+    .refresh-button {
+      font-size: 18px;
+      vertical-align: top;
+      padding: 0 10px;
+      height: 40px;
+      line-height: 40px;
+      position: relative;
+      margin-left: 20px;
+      left: -4px;
     }
     /deep/ .el-date-editor .el-range-input {
       width: 42%;

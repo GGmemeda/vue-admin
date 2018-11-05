@@ -1,5 +1,5 @@
-const DEV_DOMIN = 'http://192.168.100.143:900';
-const PROD_DOMIN = 'http://192.168.100.143:900';
+const DEV_DOMIN = '';
+const PROD_DOMIN = '';
 
 const currentDomin = DEV_DOMIN;
 
@@ -10,6 +10,6 @@ module.exports = {
   CORS: [PROD_DOMIN, DEV_DOMIN],
   api_domin: currentDomin,
   api: {
-    DbConfig: `${APIV1}/DbConfig`
+
   }
 };

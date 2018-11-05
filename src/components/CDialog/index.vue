@@ -1,20 +1,29 @@
 <template>
   <el-dialog
-    v-bind="$attrs"
+    class="c-common-dialog"
     :title="title"
     :visible.sync="visible"
     v-loading="loading"
-    @close="$emit('update:show', false)"
+    v-el-drag-dialog
+    @close="closeModal"
+    v-bind="$attrs"
     :show="show">
     <slot></slot>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="show = false">{{cancelText}}</el-button>
-      <el-button type="primary" @click="onOk">{{okText}}</el-button>
+    <div slot="footer" class="dialog-footer"   v-if="!hiddenButton">
+      <slot name="footer" >
+        <el-button @click="show = false">{{cancelText}}</el-button>
+        <el-button type="primary" @click="onOk">{{okText}}</el-button>
+      </slot>
     </div>
   </el-dialog>
 </template>
 <script>
+  import elDragDialog from '@/directive/el-dragDialog'
   export default {
+    name:'CDialog',
+    directives:{
+      elDragDialog
+    },
     data () {
       return {
         visible: this.show
@@ -23,6 +32,10 @@
     mounted(){
     },
     props: {
+      hiddenButton:{
+        type:Boolean,
+        default:false
+      },
       show: {
         type: Boolean,
         default: false
@@ -45,6 +58,10 @@
       }
     },
     methods: {
+      closeModal(){
+        this.$emit('update:show', false);
+        this.$emit('close', false);
+      },
       onOk () {
         this.$emit('onOk');
       }
@@ -54,3 +71,11 @@
     }
   };
 </script>
+<style scoped rel="stylesheet/scss" lang="scss"  >
+  .c-common-dialog{
+    /deep/ .el-dialog__title{
+      user-select: none;
+    }
+  }
+
+</style>

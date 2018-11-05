@@ -1,7 +1,7 @@
 {
-  "name": "vue集成解决方案",
+  "name": "vueAdmin",
   "version": "1.0.0",
-  "description": "云后台",
+  "description": "vue集成管理系统",
   "author": "vue-admin",
   "private": true,
   "scripts": {
