@@ -20,7 +20,7 @@
     >
       <template slot-scope="{render}" slot="status">
         <el-switch
-          v-model="render.row.status===0"
+          v-model="render.row.status"
           active-color="#13ce66"
           inactive-color="#ff4949"/>
       </template>
