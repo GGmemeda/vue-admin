@@ -17,4 +17,4 @@ npm run dev
 ```
 浏览器访问 http://localhost:7300.
 
-tips:mock.js 会拦截 XMLHttpRequest 并且会设置 withCredentials为false，不带cookie;
+**注意:mock.js 会拦截 XMLHttpRequest 并且会设置 withCredentials为false，不带cookie;
