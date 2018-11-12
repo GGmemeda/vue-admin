@@ -3,16 +3,11 @@
     <el-table
       class="c-table"
       v-loading="loading"
-      :data="dataSource"
       ref="CTable"
-      :span-method="spanMethod"
-      :border="tableOptions.border"
-      :height="tableOptions.height"
-      :stripe="tableOptions.stripe"
       :row-class-name="rowClassName"
+      v-bind="$attrs"
+      v-on="getListeners()"
       :header-row-class-name="'c-table-header'"
-      :highlight-current-row="tableOptions.highlightCurrentRow"
-      @current-change="handleRowCurrentChange"
       @selection-change="handleSelectionChange"
       @row-click="rowClick"
     >
@@ -34,6 +29,8 @@
           :prop="item.key"
           :label="item.name"
           :width='item.width?item.width:""'
+          :align="item.align"
+          :sortable="item.sortable"
           :min-width="item.minWidth ? item.minWidth : ''"
         >
           <template slot-scope="scope">
@@ -46,10 +43,12 @@
           :prop="item.key"
           :label="item.name"
           :width='item.width'
+          :align="item.align"
+          :sortable="item.sortable"
           :min-width="item.minWidth ? item.minWidth : ''"
         >
 
-          <template slot-scope="scope" >
+          <template slot-scope="scope">
             <template v-if="!item.overflow">
               {{scope.row[item.key]}}
             </template>
@@ -75,7 +74,7 @@
         align="center"
       >
         <template slot-scope="scope" v-if="showButtons">
-          <el-tooltip  v-for="(singleButton,key) in showButtons" :key="key" class="item" effect="dark"
+          <el-tooltip v-for="(singleButton,key) in showButtons" :key="key" class="item" effect="dark"
                       :content="singleButton.name" placement="top">
             <el-button
               :style="{color: singleButton.color||'#409EFF'}" @click="handleClick(scope.row,singleButton.key)"
@@ -89,15 +88,15 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      class="c-table-pagination"
       v-if="pagination"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
       :current-page="currentPage"
       :page-sizes="pageSizeSelection"
       :page-size="currentPageSize"
-      :layout='paginationLayout'
-      :total="total">
+      :layout="paginationLayout"
+      :total="total"
+      class="c-table-pagination"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange" >
     </el-pagination>
   </div>
 </template>
@@ -112,11 +111,6 @@
         required: true
       },
       showIndex: [String],
-      //表格数据参数
-      dataSource: {
-        type: Array,
-        default: []
-      },
       // 复选框
       multipleSelection: {
         type: Array,
@@ -162,10 +156,6 @@
         type: Number,
         default: 1
       },
-      //行列合并方法
-      spanMethod: {
-        type: Function,
-      },
       //通用表格操作展示
       showButtons: {
         type: Array,
@@ -196,7 +186,6 @@
       };
     },
     methods: {
-
       handleSizeChange (val) {
         this.pagination.pageSize = val;
         this.$emit('onPageChange', this.pagination);
@@ -207,9 +196,6 @@
         }
         const data = { row: Row, event: Event, column: Column };
         this.$emit('onRowClick', data);
-      },
-      handleRowCurrentChange (val) {
-        this.$emit('tableRowChange', val);
       },
       handleClick (row, type) {
         this.$emit('onCtrlClick', row, type);
@@ -222,8 +208,17 @@
         this.$emit('update:multipleSelection', val);
         this.$emit('onSelectionItems', val);
       },
+      getListeners () {
+        const events = {};
+        Object.keys(this.$listeners).map(ele => {
+          if (ele !== 'onPageChange' && ele !== 'onCtrlClick') {
+            events[ele] = this.$listeners[ele];
+          }
+        });
+        return events;
+      },
       rowClassName (rowdata) {
-        const data = this.dataSource;
+        const data = this.$attrs.data;
         let className = data[rowdata.rowIndex].class ? data[rowdata.rowIndex].class : '';
         if (className.length === 0) { return; }
         className = className.join(' ');
@@ -258,7 +253,7 @@
         }
         border-radius: 4px 4px 4px 4px;
       }
-      .table-text-overflow{
+      .table-text-overflow {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
