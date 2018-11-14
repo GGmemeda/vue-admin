@@ -1,54 +1,71 @@
 <template>
-  <div class="search-bar-out" v-if="fields" ref="searchBar">
+  <div v-if="fields" ref="searchBar" class="search-bar-out" >
     <template v-for="field in fields">
       <div class="search-item-out">
         <div class="search-item">
-          <div class="title" :style='{width: field.labelWidth}' v-if="field.label">{field.label}：</div>
+          <div v-if="field.label" :style="{width: field.labelWidth}" class="title" >{{field.label||''}}</div>
           <div :style="{width:(field.width?field.width:field.type==='searchInput'?220:180)+'px'}">
-            <el-input v-bind="field.$el" v-on="field.$on" v-if="field.type==='input'" v-model="currentData[field.key]"
-                      :placeholder="field.placeholder||'请填写内容'"></el-input>
-            <el-select v-bind="field.$el"
-                       v-on="field.$on"
-                       v-else-if="field.type==='select'" v-model="currentData[field.key]"
-                       :clearable="true"
-                       @change="handleChange(field)"
+            <el-input
+              v-if="field.type==='input'"
+              v-bind="field.$el"
+              v-model="currentData[field.key]"
+              :placeholder="field.placeholder||'请填写内容'"
+              size="medium"
+              v-on="field.$on"
+            ></el-input>
+            <el-select
+              v-else-if="field.type==='select'"
+              v-bind="field.$el"
+              v-model="currentData[field.key]"
+              :clearable="true"
+              size="medium"
+              v-on="field.$on"
+              @change="handleChange(field)"
 
             >
-              <el-option
-                v-if="field.options instanceof Array"
-                v-for="item in field.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <template v-if="field.options instanceof Array">
+                <el-option
+                  v-for="item in field.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </template>
             </el-select>
-            <el-input-number v-bind="field.$el"
-                             v-else-if="field.type==='inputNumber'" v-model="currentData[field.key]"
-                             :placeholder="field.placeholder||'请填写内容'"
-                             :clearable="true"
-                             @change="handleChange(field)"
+            <el-input-number
+              v-else-if="field.type==='inputNumber'" v-model="currentData[field.key]"
+              v-bind="field.$el"
+              :placeholder="field.placeholder||'请填写内容'"
+              :clearable="true"
+              size="medium"
+              @change="handleChange(field)"
             >
             </el-input-number>
             <el-input
               v-else-if="field.type==='searchInput'"
               v-bind="field.$el"
-              v-on="field.$on"
+              v-model="currentData[field.key]"
               :clearable="true"
+              size="medium"
               class="common-search-input"
-              @keyup.native.enter="field.$onClick(currentData[field.key],currentData)"
-              v-model="currentData[field.key]">
-              <i  slot="append" @click="field.$onClick(currentData[field.key],currentData)" class="el-icon-search"></i>
+              v-on="field.$on"
+              @keyup.native.enter="field.$onClick(currentData[field.key],currentData)">
+              <template v-if="field.prepend" slot="prepend">
+                <slot :name="field.prepend"></slot>
+              </template>
+              <i slot="append" class="el-icon-search" @click="field.$onClick(currentData[field.key],currentData)"></i>
             </el-input>
             <el-date-picker
               v-else-if="field.type==='date'"
               v-bind="field.$el"
-              v-on="field.$on"
               :type="field.$el&&field.$el.type||'daterange'"
-              style="width:100%"
               :range-separator="field.$el&&field.$el.separator||'-'"
               :start-placeholder="field.$el&&field.$el.placeholder&&field.$el.placeholder[0]||'开始日期'"
               :end-placeholder="field.$el&&field.$el.placeholder&&field.$el.placeholder[0]||'结束日期'"
               v-model="currentData[field.key]"
+              size="medium"
+              style="width:100%"
+              v-on="field.$on"
               @change="handleChange(field)"
             >
             </el-date-picker>
@@ -57,13 +74,14 @@
       </div>
     </template>
     <el-button v-if="showSearchButton" type="primary" icon="el-icon-search">查询</el-button>
-    <el-button class="refresh-button" @click="searchBarRefresh" type="primary" icon="el-icon-refresh"></el-button>
+    <el-button size="medium" class="refresh-button" type="primary" icon="el-icon-refresh"
+               @click="searchBarRefresh"></el-button>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'search-bar',
+    name: 'SearchBar',
     data () {
       return {
         currentData: this.value === undefined || this.value === null
@@ -107,12 +125,15 @@
 
 <style scoped rel="stylesheet/scss" lang="scss">
   .search-bar-out {
-    text-align: right;
+    text-align: left;
+    white-space: nowrap;
+    .search-item-out + .search-item-out {
+      margin-left: 20px;
+    }
     .search-item-out {
       margin-bottom: 20px;
       display: inline-block;
       align-items: center;
-      margin-left: 20px;
       .search-item {
         display: flex;
         vertical-align: middle;
@@ -123,7 +144,7 @@
           vertical-align: middle;
           font-size: 14px;
           color: #343434;
-          margin-right: 10px;
+          margin-right: 15px;
         }
 
         .warning {
@@ -156,19 +177,32 @@
         }
       }
     }
-    .common-search-input{
-      /deep/ .el-input-group__append{
+    .common-search-input {
+      /deep/ .el-input-group__append {
         background: #409EFF;
         color: #fff;
-        border:1px solid #409EFF;
+        border: 1px solid #409EFF;
+      }
+      /deep/ .el-input-group__prepend {
+        background-color: #f5f7fa;
+        color: #909399;
+        vertical-align: middle;
+        display: table-cell;
+        position: relative;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px 0 0 4px;
+        padding: 0 20px;
+        width: 1px;
+        white-space: nowrap;
+        border-right: none;
       }
     }
     .refresh-button {
       font-size: 18px;
       vertical-align: top;
       padding: 0 10px;
-      height: 40px;
-      line-height: 40px;
+      height: 36px;
+      line-height: 36px;
       position: relative;
       margin-left: 20px;
       left: -4px;
