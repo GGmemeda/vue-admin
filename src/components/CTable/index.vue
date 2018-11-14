@@ -1,13 +1,13 @@
 <template>
   <div class="c-table-out">
     <el-table
-      class="c-table"
       v-loading="loading"
       ref="CTable"
+      :header-row-class-name="'c-table-header'"
       :row-class-name="rowClassName"
       v-bind="$attrs"
+      class="c-table"
       v-on="getListeners()"
-      :header-row-class-name="'c-table-header'"
       @selection-change="handleSelectionChange"
       @row-click="rowClick"
     >
@@ -28,7 +28,7 @@
           :key="key"
           :prop="item.key"
           :label="item.name"
-          :width='item.width?item.width:""'
+          :width="item.width?item.width:''"
           :align="item.align"
           :sortable="item.sortable"
           :min-width="item.minWidth ? item.minWidth : ''"
@@ -42,7 +42,7 @@
           :key="key"
           :prop="item.key"
           :label="item.name"
-          :width='item.width'
+          :width="item.width"
           :align="item.align"
           :sortable="item.sortable"
           :min-width="item.minWidth ? item.minWidth : ''"
@@ -96,8 +96,8 @@
       :total="total"
       class="c-table-pagination"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange" >
-    </el-pagination>
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
@@ -107,10 +107,10 @@
       // 表头
       headers: {
         type: Array,
-        default: [],
+        default: ()=>[],
         required: true
       },
-      showIndex: [String],
+      showIndex: [String,Boolean],
       // 复选框
       multipleSelection: {
         type: Array,
@@ -158,7 +158,7 @@
       },
       //通用表格操作展示
       showButtons: {
-        type: Array,
+        type: [Array,Boolean],
         default: function () {
           return [
             {
@@ -180,9 +180,9 @@
     },
     data () {
       return {
-        currentPage: this.pagination.page || 1,
-        currentPageSize: this.pagination.pageSize || 10,
-        pageSizeSelection: this.pagination.pageSizeSelection || [10, 20, 50],
+        currentPage: this.pagination&&this.pagination.page || 1,
+        currentPageSize:this.pagination&& this.pagination.pageSize || 10,
+        pageSizeSelection: this.pagination&&this.pagination.pageSizeSelection || [10, 20, 50],
       };
     },
     methods: {
