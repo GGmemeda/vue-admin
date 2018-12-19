@@ -46,6 +46,11 @@ module.exports = {
     rules: [
       //取消eslint使用
       // ...(config.dev.useEslint ? [createLintingRule()] : []),
+      //自定义代码块
+      {
+        resourceQuery: /blockType=docs/,
+        loader: require.resolve('./docs-loader.js')
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
