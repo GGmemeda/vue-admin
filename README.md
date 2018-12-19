@@ -2,13 +2,13 @@
 English | [简体中文](./README.zh-CN.md)
 
 ## Introduction
-[cloudUi] 包含jsx模板语法
+[vueAdmin] 包含jsx模板语法
 
 ## Getting started
 
 ```bash
 # clone the project
-git clone https://github.com/GGmemeda/node_project.git
+git clone https://github.com/GGmemeda/vue-admin.git
 
 # install dependency
 npm install
