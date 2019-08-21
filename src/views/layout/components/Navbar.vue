@@ -21,12 +21,11 @@
           <!--{{ navbar.dashboard }}-->
           <!--</el-dropdown-item>-->
           <!--</router-link>-->
-          <el-dropdown-item >
+          <el-dropdown-item>
             <span style="display:block;" @click="logout">{{ navbar.logOut }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-
     </div>
   </div>
 </template>

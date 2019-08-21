@@ -1,16 +1,20 @@
 <template>
   <div class="instruction-wrapper">
-    <div class="instruction-top">统一思维：1.事件更改项请统一使用onChange方法名表示</div>
+    <div class="instruction-top">
+      统一思维：1.事件更改项请统一使用onChange方法名表示
+    </div>
     <ul class="instruction-ul">
-      <li class="components-line" v-for="item in items">{{item.name}}: {{item.text}}
-      <div>{{item.instruction}}</div></li>
+      <li v-for="(item,index) in items" :key="index" class="components-line">
+        {{ item.name }}: {{ item.text }}
+        <div>{{ item.instruction }}</div>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'instruction',
+    name: 'Instruction',
     data () {
       return {
         items: [

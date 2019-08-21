@@ -1,5 +1,5 @@
 <template>
-  <i v-on="$attrs" class="CIconfont" ></i>
+  <i class="CIconfont" v-on="$attrs" />
 </template>
 
 <script>

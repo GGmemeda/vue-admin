@@ -1,18 +1,23 @@
 <template>
   <el-dialog
+    v-loading="loading"
+    v-el-drag-dialog
     class="c-common-dialog"
     :title="title"
     :visible.sync="visible"
-    v-loading="loading"
-    v-el-drag-dialog
-    @close="closeModal"
     v-bind="$attrs"
-    :show="show">
-    <slot></slot>
-    <div slot="footer" class="dialog-footer"   v-if="!hiddenButton">
-      <slot name="footer" >
-        <el-button @click="show = false">{{cancelText}}</el-button>
-        <el-button type="primary" @click="onOk">{{okText}}</el-button>
+    :show="show"
+    @close="closeModal"
+  >
+    <slot />
+    <div v-if="!hiddenButton" slot="footer" class="dialog-footer">
+      <slot name="footer">
+        <el-button @click="show = false">
+          {{ cancelText }}
+        </el-button>
+        <el-button type="primary" @click="onOk">
+          {{ okText }}
+        </el-button>
       </slot>
     </div>
   </el-dialog>
@@ -23,13 +28,6 @@
     name:'CDialog',
     directives:{
       elDragDialog
-    },
-    data () {
-      return {
-        visible: this.show
-      };
-    },
-    mounted(){
     },
     props: {
       hiddenButton:{
@@ -57,6 +55,16 @@
         default: '取 消'
       }
     },
+    data () {
+      return {
+        visible: this.show
+      };
+    },
+    watch: {
+      show () { this.visible = this.show; }
+    },
+    mounted(){
+    },
     methods: {
       closeModal(){
         this.$emit('update:show', false);
@@ -65,9 +73,6 @@
       onOk () {
         this.$emit('onOk');
       }
-    },
-    watch: {
-      show () { this.visible = this.show; }
     }
   };
 </script>

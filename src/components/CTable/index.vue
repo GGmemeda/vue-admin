@@ -1,8 +1,8 @@
 <template>
   <div class="c-table-out">
     <el-table
-      v-loading="loading"
       ref="CTable"
+      v-loading="loading"
       :header-row-class-name="'c-table-header'"
       :row-class-name="rowClassName"
       v-bind="$attrs"
@@ -15,13 +15,14 @@
         v-if="multipleSelection"
         type="selection"
         align="center"
-        width="40">
-      </el-table-column>
+        width="40"
+      />
       <el-table-column
         v-if="showIndex"
         type="index"
         label="序号"
-        width="50"></el-table-column>
+        width="50"
+      />
       <template v-for="(item,key) in headers">
         <el-table-column
           v-if="item.show !== false && item.show === 'template'"
@@ -34,7 +35,7 @@
           :min-width="item.minWidth ? item.minWidth : ''"
         >
           <template slot-scope="scope">
-            <slot :name="item.key" :render="scope" :row="scope.row"></slot>
+            <slot :name="item.key" :render="scope" :row="scope.row" />
           </template>
         </el-table-column>
         <el-table-column
@@ -47,15 +48,14 @@
           :sortable="item.sortable"
           :min-width="item.minWidth ? item.minWidth : ''"
         >
-
           <template slot-scope="scope">
             <template v-if="!item.overflow">
-              {{scope.row[item.key]}}
+              {{ scope.row[item.key] }}
             </template>
             <template v-if="item.overflow">
               <el-tooltip class="item" effect="dark" :content="scope.row[item.key]" placement="top">
                 <div class="table-text-overflow">
-                  {{scope.row[item.key]}}
+                  {{ scope.row[item.key] }}
                 </div>
               </el-tooltip>
             </template>
@@ -63,6 +63,7 @@
         </el-table-column>
       </template>
       <el-table-column
+        v-if="showButtons&&showButtons.length>0"
         column-key="operation"
         :label="operation.label||'操作'"
         :header-cell-class-name="'header-operate'"
@@ -70,19 +71,19 @@
         :fixed="tableOptions.fixed?false:'right'"
         :min-width="operation.minWidth ? operation.minWidth : ''"
         :class-name="operation.className? 'table-operation '+operation.className:'table-operation '"
-        v-if="showButtons&&showButtons.length>0"
         align="center"
       >
-        <template slot-scope="scope" v-if="showButtons">
+        <template v-if="showButtons" slot-scope="scope">
           <el-tooltip v-for="(singleButton,key) in showButtons" :key="key" class="item" effect="dark"
-                      :content="singleButton.name" placement="top">
+                      :content="singleButton.name" placement="top"
+          >
             <el-button
-              :style="{color: singleButton.color||'#409EFF'}" @click="handleClick(scope.row,singleButton.key)"
-              type="text"
+              :style="{color: singleButton.color||'#409EFF'}" type="text"
               :icon="singleButton.icon?singleButton.icon:''"
               style="font-size: 15px"
-              size="small">
-            </el-button>
+              size="small"
+              @click="handleClick(scope.row,singleButton.key)"
+            />
           </el-tooltip>
         </template>
       </el-table-column>
@@ -110,7 +111,7 @@
         default: () => [],
         required: true
       },
-      showIndex: [String, Boolean],
+      showIndex: {type: [String, Boolean], default: false},
       // 复选框
       multipleSelection: {
         type: Array,
@@ -178,6 +179,13 @@
         }
       }
     },
+    data() {
+      return {
+        currentPage: this.pagination && this.pagination.page || 1,
+        currentPageSize: this.pagination && this.pagination.pageSize || 10,
+        pageSizeSelection: this.pagination && this.pagination.pageSizeSelection || [10, 20, 50],
+      };
+    },
     computed: {
       eventListeners() {
         const events = {};
@@ -190,13 +198,6 @@
         return events;
       },
 
-    },
-    data() {
-      return {
-        currentPage: this.pagination && this.pagination.page || 1,
-        currentPageSize: this.pagination && this.pagination.pageSize || 10,
-        pageSizeSelection: this.pagination && this.pagination.pageSizeSelection || [10, 20, 50],
-      };
     },
     methods: {
       handleSizeChange(val) {

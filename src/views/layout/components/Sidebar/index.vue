@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar wrap-class="scrollbar-wrapper" >
+  <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
       :show-timeout="200"
       :default-active="$route.path"
@@ -10,8 +10,8 @@
       text-color="#bfcbd9"
       active-text-color="#409EFF"
     >
-      <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-      <sidebar-item v-for="route in permission_routers" :key="route.name" :item="route" :base-path="route.path"/>
+      <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container" />
+      <sidebar-item v-for="route in permission_routers" :key="route.name" :item="route" :base-path="route.path" />
     </el-menu>
   </el-scrollbar>
 </template>

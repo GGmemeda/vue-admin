@@ -1,6 +1,5 @@
 <template>
   <div class="common-section">
-
     <div class="search-bar-out">
       <c-search
         :data="searchData"
@@ -18,11 +17,12 @@
       @onSelectionItems="tableOnSelections"
       @onCtrlClick="tableClick"
     >
-      <template slot-scope="{render}" slot="status">
+      <template slot="status" slot-scope="{render}">
         <el-switch
           v-model="render.row.status"
           active-color="#13ce66"
-          inactive-color="#ff4949"/>
+          inactive-color="#ff4949"
+        />
       </template>
     </c-table>
     <c-dialog
@@ -32,7 +32,7 @@
       ok-text="保存"
       @onOk="dialogOk"
     >
-      <c-form ref="cForm" :content="formFields" @onChange="onFormValueChange"/>
+      <c-form ref="cForm" :content="formFields" @onChange="onFormValueChange" />
     </c-dialog>
   </div>
 </template>

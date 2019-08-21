@@ -1,12 +1,12 @@
 <template>
   <div class="section-wrapper">
     <div class="page-name">
-      <span class="page-name-text">{{this.pageName}}</span>
-      <slot class="right-control" name="control"></slot>
+      <span class="page-name-text">{{ pageName }}</span>
+      <slot class="right-control" name="control" />
     </div>
     <div class="content-out">
       <el-scrollbar style="height:100%">
-        <slot></slot>
+        <slot />
       </el-scrollbar>
     </div>
   </div>
@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    name: 'index',
+    name: 'Index',
     props: {
       pageName: {
         type: String,

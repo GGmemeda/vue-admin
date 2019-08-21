@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <span @click="showChild">首页模板哦</span>
-    <childComponent v-if="status" :show-time="'当前时间'"></childComponent>
+    <childComponent v-if="status" :show-time="'当前时间'" />
   </div>
 </template>
 <script>
@@ -10,14 +10,14 @@ export default {
   components: {
     childComponent
   },
-  mounted(){
-  },
   data(){
     return {
       name:'我是弟弟组件',
       status:false,
       // docs:childComponent.__showDocs
     }
+  },
+  mounted(){
   },
   methods:{
     showChild(){

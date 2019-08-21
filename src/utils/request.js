@@ -155,4 +155,4 @@ export default function request (options) {
     }
     return Promise.reject({ _success: false, _statusCode: statusCode, _message: msg });
   });
-};
+}

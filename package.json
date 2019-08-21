@@ -9,7 +9,8 @@
     "build": "vue-cli-service build",
     "preview": "node build/index.js --preview",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext  .js,.vue src",
+    "fix": "eslint   --fix **/*.js **/*.vue"
   },
   "dependencies": {
     "axios": "^0.18.0",

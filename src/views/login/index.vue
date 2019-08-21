@@ -1,34 +1,39 @@
 <template>
   <div class="login-container">
-
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
-             label-position="left">
+             label-position="left"
+    >
       <div class="title-container">
-        <h3 class="title">{{ constwordslogin.title }}</h3>
+        <h3 class="title">
+          {{ constwordslogin.title }}
+        </h3>
       </div>
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user"/>
+          <svg-icon icon-class="user" />
         </span>
         <el-input v-model="loginForm.username" :placeholder="constwordslogin.username" name="username" type="text"
-                  auto-complete="on"/>
+                  auto-complete="on"
+        />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password"/>
+          <svg-icon icon-class="password" />
         </span>
-        <el-input :type="passwordType" v-model="loginForm.password" :placeholder="constwordslogin.password"
-                  name="password" auto-complete="on" @keyup.enter.native="handleLogin"/>
+        <el-input v-model="loginForm.password" :type="passwordType" :placeholder="constwordslogin.password"
+                  name="password" auto-complete="on" @keyup.enter.native="handleLogin"
+        />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="eyeType"/>
+          <svg-icon :icon-class="eyeType" />
         </span>
       </el-form-item>
 
       <el-form-item prop="verifycode" class="identifybox">
         <el-input v-model="loginForm.verifycode" :placeholder="constwordslogin.verifycode" name="verifycode" type="text"
-                  class="identifyinput"/>
+                  class="identifyinput"
+        />
         <img :src="identifyCode" class="identifyimg" @click="refreshCode">
       </el-form-item>
 

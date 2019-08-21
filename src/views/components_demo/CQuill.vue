@@ -1,5 +1,5 @@
 <template>
-    <c-quill></c-quill>
+  <c-quill />
 </template>
 
 <script>

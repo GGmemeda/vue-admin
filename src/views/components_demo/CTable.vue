@@ -8,35 +8,38 @@
       />
     </div>
     <c-table
+      ref="table"
       :headers="tableHeaders"
-      :dataSource="tableData6"
+      :data-source="tableData6"
       :total="tableData6.length"
       :pagination="tablePagination"
-      :multipleSelection="tableSelection"
-      ref="table"
+      :multiple-selection="tableSelection"
       @onPageChange="tablePageChange"
       @onSelectionItems="tableOnSelections"
       @onCtrlClick="tableClick"
     >
-      <template slot-scope="{render}" slot="id">
+      <template slot="id" slot-scope="{render}">
         <el-popover trigger="hover" placement="top">
           <p>姓名: {{ render.row.name }}</p>
           <p>id: {{ render.row.id }}</p>
           <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ render.row.name }}</el-tag>
+            <el-tag size="medium">
+              {{ render.row.name }}
+            </el-tag>
           </div>
         </el-popover>
       </template>
     </c-table>
     <c-dialog
       :show.sync="dialogVisible"
-    >11111
+    >
+      11111
     </c-dialog>
   </div>
 </template>
 <script>
   export default {
-    name: 'test11',
+    name: 'Test11',
     data () {
       return {
         dialogVisible: false,

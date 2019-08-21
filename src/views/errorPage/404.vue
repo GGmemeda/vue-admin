@@ -1,13 +1,19 @@
 <template>
   <div class="errPage-container">
-    <el-button icon="arrow-left" class="pan-back-btn" @click="back">返回</el-button>
+    <el-button icon="arrow-left" class="pan-back-btn" @click="back">
+      返回
+    </el-button>
     <el-row>
       <el-col :span="12">
-        <h1 class="text-jumbo text-ginormous">Oops!</h1>
+        <h1 class="text-jumbo text-ginormous">
+          Oops!
+        </h1>
         <h2>你访问的地址不存在</h2>
         <ul class="list-unstyled">
           <li class="link-type">
-            <router-link to="/dashboard">回首页</router-link>
+            <router-link to="/dashboard">
+              回首页
+            </router-link>
           </li>
         </ul>
       </el-col>
