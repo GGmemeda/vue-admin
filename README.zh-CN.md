@@ -15,6 +15,6 @@ npm install
 # 启动开发环境
 npm run dev
 ```
-浏览器访问 http://localhost:7300.
+浏览器访问 http://localhost:6300.
 
 **注意:mock.js 会拦截 XMLHttpRequest 并且会设置 withCredentials为false，不带cookie;

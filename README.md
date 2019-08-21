@@ -16,6 +16,6 @@ npm install
 # develop
 npm run dev
 ```
-This will automatically open http://localhost:7300.
+This will automatically open http://localhost:6300.
 
 tips:mock.js will inspect XMLHttpRequest set withCredentials为false，without cookie;
