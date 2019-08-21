@@ -13,6 +13,7 @@
       :total="tableData6.length"
       :pagination="tablePagination"
       :multipleSelection="tableSelection"
+      ref="table"
       @onPageChange="tablePageChange"
       @onSelectionItems="tableOnSelections"
       @onCtrlClick="tableClick"
@@ -114,7 +115,8 @@
       };
     },
     mounted(){
-
+      console.log(this.$refs.table);
+    console.log(this.$refs.table.$options.name);
     },
     methods: {
       searchChange (data, field) {

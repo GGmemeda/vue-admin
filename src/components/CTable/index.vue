@@ -7,7 +7,7 @@
       :row-class-name="rowClassName"
       v-bind="$attrs"
       class="c-table"
-      v-on="getListeners()"
+      v-on="eventListeners"
       @selection-change="handleSelectionChange"
       @row-click="rowClick"
     >
@@ -107,10 +107,10 @@
       // 表头
       headers: {
         type: Array,
-        default: ()=>[],
+        default: () => [],
         required: true
       },
-      showIndex: [String,Boolean],
+      showIndex: [String, Boolean],
       // 复选框
       multipleSelection: {
         type: Array,
@@ -158,7 +158,7 @@
       },
       //通用表格操作展示
       showButtons: {
-        type: [Array,Boolean],
+        type: [Array, Boolean],
         default: function () {
           return [
             {
@@ -178,38 +178,10 @@
         }
       }
     },
-    data () {
-      return {
-        currentPage: this.pagination&&this.pagination.page || 1,
-        currentPageSize:this.pagination&& this.pagination.pageSize || 10,
-        pageSizeSelection: this.pagination&&this.pagination.pageSizeSelection || [10, 20, 50],
-      };
-    },
-    methods: {
-      handleSizeChange (val) {
-        this.pagination.pageSize = val;
-        this.$emit('onPageChange', this.pagination);
-      },
-      rowClick (Row, Event, Column) {
-        if (!Column || Column.type === 'selection' || Column.columnKey === 'operation' || Column.type === 'expand') {
-          return;
-        }
-        const data = { row: Row, event: Event, column: Column };
-        this.$emit('onRowClick', data);
-      },
-      handleClick (row, type) {
-        this.$emit('onCtrlClick', row, type);
-      },
-      handleCurrentChange (val) {
-        this.pagination.page = val;
-        this.$emit('onPageChange', this.pagination);
-      },
-      handleSelectionChange (val) {
-        this.$emit('update:multipleSelection', val);
-        this.$emit('onSelectionItems', val);
-      },
-      getListeners () {
+    computed: {
+      eventListeners() {
         const events = {};
+        console.log(this.$listeners);
         Object.keys(this.$listeners).map(ele => {
           if (ele !== 'onPageChange' && ele !== 'onCtrlClick') {
             events[ele] = this.$listeners[ele];
@@ -217,15 +189,49 @@
         });
         return events;
       },
-      rowClassName (rowdata) {
+
+    },
+    data() {
+      return {
+        currentPage: this.pagination && this.pagination.page || 1,
+        currentPageSize: this.pagination && this.pagination.pageSize || 10,
+        pageSizeSelection: this.pagination && this.pagination.pageSizeSelection || [10, 20, 50],
+      };
+    },
+    methods: {
+      handleSizeChange(val) {
+        this.pagination.pageSize = val;
+        this.$emit('onPageChange', this.pagination);
+      },
+      rowClick(Row, Event, Column) {
+        if (!Column || Column.type === 'selection' || Column.columnKey === 'operation' || Column.type === 'expand') {
+          return;
+        }
+        const data = {row: Row, event: Event, column: Column};
+        this.$emit('onRowClick', data);
+      },
+      handleClick(row, type) {
+        this.$emit('onCtrlClick', row, type);
+      },
+      handleCurrentChange(val) {
+        this.pagination.page = val;
+        this.$emit('onPageChange', this.pagination);
+      },
+      handleSelectionChange(val) {
+        this.$emit('update:multipleSelection', val);
+        this.$emit('onSelectionItems', val);
+      },
+      rowClassName(rowdata) {
         const data = this.$attrs.data;
         let className = data[rowdata.rowIndex].class ? data[rowdata.rowIndex].class : '';
-        if (className.length === 0) { return; }
+        if (className.length === 0) {
+          return;
+        }
         className = className.join(' ');
         return className;
       },
       // 提供多选控制项
-      toggleSelection (rows) {
+      toggleSelection(rows) {
         if (rows) {
           rows.forEach(row => {
             this.$refs.CTable.toggleRowSelection(row);
@@ -241,24 +247,30 @@
   .c-table-out {
     .c-table {
       width: 100%;
+
       td {
         padding: 7px 0 !important;
       }
+
       th {
         padding: 14px 0;
       }
+
       .c-table-header {
         th {
           background-color: #fafafa;
         }
+
         border-radius: 4px 4px 4px 4px;
       }
+
       .table-text-overflow {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
     }
+
     .c-table-pagination {
       text-align: right;
       margin-top: 30px;

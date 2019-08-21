@@ -14,7 +14,7 @@ import '@/styles/index.scss'; // global css
 // require styles 引入样式
 
 
-import './mock'; // simulation data
+// import './mock'; // simulation data
 import './icons'; // icon
 import './components/plugins';//全局映入通用自定义插件
 import * as filters from './filters';
