@@ -47,6 +47,7 @@
 <script>
   import { isvalidUsername } from '@/utils/validate';
   import zhc from '../../utils/wordsconfig.js';
+  import {setToken} from "../../utils/auth";
 
   export default {
     name: 'Login',
@@ -126,7 +127,9 @@
         immediate: true
       }
     },
-    created () {},
+    created () {
+      setToken("232");
+    },
     destroyed () {},
     methods: {
       refreshCode () {
@@ -142,18 +145,20 @@
         }
       },
       handleLogin () {
+        this.$router.push("/");
         this.$refs.loginForm.validate(valid => {
           if (valid) {
-            this.loading = true;
-            this.$store
-              .dispatch('LoginByUsername', this.loginForm)
-              .then(() => {
-                this.loading = false;
-                this.$router.push({ path: this.redirect || '/' });
-              })
-              .catch(() => {
-                this.loading = false;
-              });
+            this.$router.push("/");
+            // this.loading = true;
+            // this.$store
+            //   .dispatch('LoginByUsername', this.loginForm)
+            //   .then(() => {
+            //     this.loading = false;
+            //     this.$router.push({ path: this.redirect || '/' });
+            //   })
+            //   .catch(() => {
+            //     this.loading = false;
+            //   });
           } else {
             console.log('error submit!!');
             return false;
