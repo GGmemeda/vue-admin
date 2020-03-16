@@ -25,9 +25,18 @@ router.beforeEach((to, from, next) => {
   // console.log(getToken(), !(!undefined), to.path, 'getToken');
   if(getToken()){
     next();
+
+    if (to.path === '/login') {
+      next({ path: '/' });
+      NProgress.done();
+    }
   }else{
-    next('/login');
-    NProgress.done();
+    if (whiteList.indexOf(to.path) !== -1) {
+      next();
+    }else{
+      next('/login');
+      NProgress.done();
+    }
   }
 });
 
