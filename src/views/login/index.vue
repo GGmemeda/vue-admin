@@ -41,6 +41,8 @@
         {{ constwordslogin.logIn }}
       </el-button>
     </el-form>
+    <div class="bei-an">
+      <a href="http://www.beian.miit.gov.cn">备案编号:蜀ICP备18023925号</a></div>
   </div>
 </template>
 
@@ -187,6 +189,17 @@
 
   /* reset element-ui css */
   .login-container {
+    .bei-an{
+      p{
+        margin:0;
+      }
+      background: transparent;
+      color: #9c9c9c;
+      text-align: center;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+    }
     .el-input {
       display: inline-block;
       height: 49px;
@@ -236,9 +249,9 @@
     }
     .logIn {
       width: 100%;
-      margin-bottom: 30px;
       height: 45px;
     }
+
   }
 </style>
 
@@ -257,9 +270,8 @@
       position: absolute;
       left: 0;
       right: 0;
-      width: 520px;
+      width: 450px;
       max-width: 100%;
-      padding: 35px 35px 15px 35px;
       margin: 120px auto;
     }
     .tips {
