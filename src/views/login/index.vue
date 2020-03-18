@@ -42,7 +42,8 @@
       </el-button>
     </el-form>
     <div class="bei-an">
-      <a href="http://www.beian.miit.gov.cn">备案编号:蜀ICP备18023925号</a></div>
+      <a href="http://www.beian.miit.gov.cn">备案编号:蜀ICP备18023925号</a>
+    </div>
   </div>
 </template>
 
